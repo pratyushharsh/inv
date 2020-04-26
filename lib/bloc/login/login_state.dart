@@ -88,5 +88,3 @@ class LoginState {
         isFailure: $isFailure}''';
   }
 }
-
-class InitialLoginState extends LoginState {}

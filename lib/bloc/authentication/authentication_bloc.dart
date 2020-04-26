@@ -1,8 +1,18 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:inv/repository/user_repository.dart';
 import './bloc.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+
+  final UserRepository _repository;
+
+  AuthenticationBloc({@required UserRepository repository})
+      : assert(repository != null),
+        _repository = repository;
+
+
   @override
   AuthenticationState get initialState => UnInitialized();
 
@@ -20,7 +30,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   Stream<AuthenticationState> _mapAppStartedStated() async* {
-
+    yield UnAuthenticated();
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {

@@ -1,6 +1,6 @@
 class UserRepository {
   
-  Future<void> signInwithCredential() async {
+  Future<void> signInWithCredential() async {
     await Future.delayed(Duration(seconds: 3));
     return;
   }
