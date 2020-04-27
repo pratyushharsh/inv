@@ -4,6 +4,7 @@ import 'package:inv/bloc/authentication/bloc.dart';
 import 'package:inv/bloc/settings/bloc.dart';
 import 'package:inv/bloc/theme/bloc.dart';
 import 'package:inv/repository/user_repository.dart';
+import 'package:inv/screen/dashboard_screen.dart';
 import 'package:inv/screen/login_screen.dart';
 import 'package:inv/simple_bloc_delegate.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           if (state is UnAuthenticated) {
             return LoginScreen();
           } else if (state is Authenticated) {
-            return Container();
+            return DashboardScreen();
           }
           else {
             return Container();
