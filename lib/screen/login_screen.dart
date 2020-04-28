@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inv/bloc/login/bloc.dart';
+import 'package:inv/generated/l10n.dart';
 import 'package:inv/screen/settings_screen.dart';
 import 'package:inv/widget/login/login_form.dart';
 
@@ -9,7 +10,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text(S.of(context).login),
         actions: <Widget>[
           IconButton(
             onPressed: () {

@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inv/bloc/theme/bloc.dart';
+import 'package:inv/generated/l10n.dart';
 
 class SettingsScreen extends StatelessWidget {
 
@@ -8,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(S.of(context).settings),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -20,9 +24,29 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: DropdownWidget(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RaisedButton(
+                onPressed: () {
+                  BlocProvider.of<ThemeBloc>(context).add(ChangeLocale(locale: Locale("en")));
+                },
+                child: Text(S.of(context).english),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  BlocProvider.of<ThemeBloc>(context).add(ChangeLocale(locale: Locale("hi")));
+                },
+                child: Text(S.of(context).hindi),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(S.of(context).dark_mode),
+              ThemeSwitch()
+            ],
           )
         ],
       ),
@@ -30,40 +54,20 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class DropdownWidget extends StatefulWidget {
-  DropdownWidget({Key key}) : super(key: key);
-
-  @override
-  _DropdownWidgetState createState() => _DropdownWidgetState();
-}
-
-class _DropdownWidgetState extends State<DropdownWidget> {
-  String dropdownValue = 'One';
-
+class ThemeSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
+    ThemeMode mode = BlocProvider.of<ThemeBloc>(context).state.themeMode;
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(end: 8),
+      child: Switch(
+        value: ThemeMode.dark == mode,
+        onChanged: (isOn) {
+          ThemeMode newMode = isOn ? ThemeMode.dark : ThemeMode.light;
+          BlocProvider.of<ThemeBloc>(context).add(ChangeThemeMode(themeMode: newMode));
+        },
       ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
     );
   }
 }
+

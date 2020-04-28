@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inv/bloc/login/bloc.dart';
+import 'package:inv/generated/l10n.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.email),
-                  labelText: 'Email'
+                  labelText: S.of(context).user_name
                 ),
                 keyboardType: TextInputType.emailAddress,
                 autovalidate: true,
@@ -71,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _passwordController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.lock),
-                  labelText: 'Password'
+                  labelText: S.of(context).password
                 ),
                 obscureText: true,
                 autovalidate: true,
@@ -90,7 +91,7 @@ class _LoginFormState extends State<LoginForm> {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       onPressed: _onFormSubmitted,
-                      child: Text('Login'),
+                      child: Text(S.of(context).login),
                     )
                   ],
                 ),
