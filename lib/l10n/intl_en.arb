@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2018-09-24T14:38:58.383162",
+  "user_name": "Username",
+  "@user_name": {
+    "type": "text",
+    "description": "Username of user"
+  },
+  "password": "Password",
+  "login": "Login",
+  "english": "English",
+  "hindi": "Hindi",
+  "settings": "Settings",
+  "dark_mode": "Dark Mode"
+}
