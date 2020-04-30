@@ -23,6 +23,7 @@ dependencies:
     sdk: flutter
   intl:
   flutter_bloc:
+  hydrated_bloc: ^3.1.0
   equatable:
   google_fonts: ^1.0.0
 
@@ -47,7 +48,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/images/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

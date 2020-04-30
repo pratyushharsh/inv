@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inv/bloc/authentication/bloc.dart';
 import 'package:inv/bloc/login/bloc.dart';
 import 'package:inv/generated/l10n.dart';
 import 'package:inv/screen/settings_screen.dart';
@@ -23,7 +24,9 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
       body: BlocProvider<LoginBloc>(
-        create: (create) => LoginBloc(),
+        create: (create) => LoginBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context)
+        ),
         child: LoginForm(),
       ),
     );

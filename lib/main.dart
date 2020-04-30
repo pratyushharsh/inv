@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:inv/bloc/authentication/bloc.dart';
+import 'package:inv/bloc/item/bloc.dart';
 import 'package:inv/bloc/settings/bloc.dart';
 import 'package:inv/bloc/theme/bloc.dart';
-import 'package:inv/config/app_theme_data.dart';
+import 'package:inv/repository/item_repository.dart';
 import 'package:inv/repository/user_repository.dart';
 import 'package:inv/screen/dashboard_screen.dart';
 import 'package:inv/screen/login_screen.dart';
@@ -32,6 +33,13 @@ void main() {
       BlocProvider(
         create: (context) =>
             AuthenticationBloc(repository: userRepository)..add(AppStarted()),
+      ),
+      BlocProvider<ItemBloc>(
+        create: (context) {
+          return ItemBloc(
+              itemRepository: ItemRepository()
+          )..add(ItemCategoryLoaded());
+        },
       )
     ],
     child: MyApp(),
@@ -51,17 +59,16 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate
           ],
-          themeMode: state.themeMode,
-          theme: AppThemeData.lightThemeData.copyWith(
-            platform: state.platform
-          ),
-          darkTheme: AppThemeData.darkThemeData.copyWith(
-            platform: state.platform
-          ),
+//          themeMode: state.themeMode,
+//          theme: AppThemeData.lightThemeData.copyWith(
+//            platform: state.platform
+//          ),
+//          darkTheme: AppThemeData.darkThemeData.copyWith(
+//            platform: state.platform
+//          ),
           locale: state.locale,
           supportedLocales: S.delegate.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
-//          deviceLocale = locale;
             return locale;
           },
           home: _MainScreen(),
