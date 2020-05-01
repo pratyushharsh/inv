@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:inv/bloc/authentication/bloc.dart';
-import 'package:inv/bloc/item/bloc.dart';
+import 'package:inv/bloc/item_category/bloc.dart';
 import 'package:inv/bloc/settings/bloc.dart';
 import 'package:inv/bloc/theme/bloc.dart';
 import 'package:inv/repository/item_repository.dart';
@@ -11,12 +11,26 @@ import 'package:inv/repository/user_repository.dart';
 import 'package:inv/screen/dashboard_screen.dart';
 import 'package:inv/screen/login_screen.dart';
 import 'package:inv/simple_bloc_delegate.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'generated/l10n.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final UserRepository userRepository = UserRepository();
   BlocSupervisor.delegate = SimpleBlocDelegate();
+
+  final Database database = await openDatabase(
+      join(await getDatabasesPath(), 'inv_database.db'),
+    onCreate: (db, version) {
+        return db.execute(
+            "CREATE TABLE ITEM_CATEGORY(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, description TEXT, color INTEGER)"
+        );
+    },
+    version: 1
+  );
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<ThemeBloc>(
@@ -34,10 +48,10 @@ void main() {
         create: (context) =>
             AuthenticationBloc(repository: userRepository)..add(AppStarted()),
       ),
-      BlocProvider<ItemBloc>(
+      BlocProvider<ItemCategoryBloc>(
         create: (context) {
-          return ItemBloc(
-              itemRepository: ItemRepository()
+          return ItemCategoryBloc(
+              itemRepository: ItemRepository(database: database)
           )..add(ItemCategoryLoaded());
         },
       )

@@ -2,21 +2,44 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:inv/entity/item_category_entity.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ItemRepository {
+  final Database database;
+  ItemRepository({this.database});
+
   List<ItemCategoryEntity> item = [];
 
   Future<List<ItemCategoryEntity>> loadItemCategory() async {
-//    item.add(ItemCategoryEntity(name: "Home",description: "Home Category", ));
-//    item.add(ItemCategoryEntity(name: "Fashion",description: "Home Category",));
-    await Future.delayed(Duration(seconds: 1));
-    return item;
+    final List<Map<String, dynamic>> itmCategory = await database.query('ITEM_CATEGORY');
+    return List.generate(itmCategory.length, (index) {
+      return ItemCategoryEntity.fromJson(itmCategory[index]);
+    });
   }
 
-  Future<List<ItemCategoryEntity>> addItem(ItemCategoryEntity itm) async {
-    item.add(itm);
-    await Future.delayed(Duration(seconds: 1));
-    return item;
+  Future<void> addItem(ItemCategoryEntity itm) async {
+    await database.insert(
+      'ITEM_CATEGORY',
+      itm.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> updateItem(ItemCategoryEntity itm) async {
+    await database.update(
+      'ITEM_CATEGORY',
+      itm.toJson(),
+      where: "id = ?",
+      whereArgs: [itm.id],
+    );
+  }
+
+  Future<void> deleteItem(ItemCategoryEntity itm) async {
+    await database.delete(
+      'ITEM_CATEGORY',
+      where: "id = ?",
+      whereArgs: [itm.id]
+    );
   }
 
 }

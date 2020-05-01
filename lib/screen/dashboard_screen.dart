@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inv/bloc/item/bloc.dart';
+import 'package:inv/bloc/item_category/bloc.dart';
 import 'package:inv/repository/item_repository.dart';
 import 'package:inv/screen/item_group.dart';
 import 'package:inv/screen/item_screen.dart';

@@ -3,14 +3,14 @@ import 'package:inv/model/item_category.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ItemState extends Equatable {
-  const ItemState();
+abstract class ItemCategoryState extends Equatable {
+  const ItemCategoryState();
 
   @override
   List<Object> get props => [];
 }
 
-class ItemCategoryLoadSuccess extends ItemState {
+class ItemCategoryLoadSuccess extends ItemCategoryState {
   final List<ItemCategory> category;
 
   const ItemCategoryLoadSuccess([this.category = const []]);
@@ -24,6 +24,6 @@ class ItemCategoryLoadSuccess extends ItemState {
   }
 }
 
-class ItemCategoryLoading extends ItemState {}
+class ItemCategoryLoading extends ItemCategoryState {}
 
-class ItemCategoryLoadFailure extends ItemState {}
+class ItemCategoryLoadFailure extends ItemCategoryState {}

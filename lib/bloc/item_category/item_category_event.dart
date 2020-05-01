@@ -3,16 +3,16 @@ import 'package:inv/model/item_category.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ItemEvent extends Equatable {
-  const ItemEvent();
+abstract class ItemCategoryEvent extends Equatable {
+  const ItemCategoryEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class ItemCategoryLoaded extends ItemEvent{}
+class ItemCategoryLoaded extends ItemCategoryEvent{}
 
-class ItemCategoryAdded extends ItemEvent {
+class ItemCategoryAdded extends ItemCategoryEvent {
   final ItemCategory itemCategory;
   ItemCategoryAdded({this.itemCategory});
 
@@ -25,7 +25,7 @@ class ItemCategoryAdded extends ItemEvent {
   }
 }
 
-class ItemCategoryUpdated extends ItemEvent {
+class ItemCategoryUpdated extends ItemCategoryEvent {
   final ItemCategory itemCategory;
   ItemCategoryUpdated({this.itemCategory});
 
@@ -38,7 +38,7 @@ class ItemCategoryUpdated extends ItemEvent {
   }
 }
 
-class ItemCategoryDeleted extends ItemEvent {
+class ItemCategoryDeleted extends ItemCategoryEvent {
   final ItemCategory itemCategory;
   ItemCategoryDeleted({this.itemCategory});
 
