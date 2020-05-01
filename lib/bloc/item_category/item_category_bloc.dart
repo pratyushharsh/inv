@@ -47,7 +47,7 @@ class ItemCategoryBloc extends Bloc<ItemCategoryEvent, ItemCategoryState> {
   Stream<ItemCategoryState> _mapAddItemCategoryToState(ItemCategory itm) async* {
     yield ItemCategoryLoading();
     try {
-      await itemRepository.addItem(itm.toEntity());
+      await itemRepository.addItemCategory(itm.toEntity());
       yield* _mapItemCategoryToState();
     } catch (e) {
       print(e);
@@ -58,7 +58,7 @@ class ItemCategoryBloc extends Bloc<ItemCategoryEvent, ItemCategoryState> {
   Stream<ItemCategoryState> _mapUpdateItemCategoryToState(ItemCategory itm) async* {
     yield ItemCategoryLoading();
     try {
-      await itemRepository.updateItem(itm.toEntity());
+      await itemRepository.updateItemCategory(itm.toEntity());
       yield* _mapItemCategoryToState();
     } catch (e) {
       print(e);
@@ -69,12 +69,17 @@ class ItemCategoryBloc extends Bloc<ItemCategoryEvent, ItemCategoryState> {
   Stream<ItemCategoryState> _mapDeleteItemCategoryToState(ItemCategory itm) async* {
     yield ItemCategoryLoading();
     try {
-      await itemRepository.deleteItem(itm.toEntity());
+      await itemRepository.deleteItemCategory(itm.toEntity());
       yield* _mapItemCategoryToState();
     } catch (e) {
       print(e);
       yield ItemCategoryLoadFailure();
     }
+  }
+
+  Future<List<ItemCategory>> getAllItemCategory() async {
+    final itmCategory = await itemRepository.loadItemCategory();
+    return itmCategory.map(ItemCategory.fromEntity).toList();
   }
 }
 

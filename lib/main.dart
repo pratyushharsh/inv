@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:inv/bloc/authentication/bloc.dart';
+import 'package:inv/bloc/item/bloc.dart';
 import 'package:inv/bloc/item_category/bloc.dart';
 import 'package:inv/bloc/settings/bloc.dart';
 import 'package:inv/bloc/theme/bloc.dart';
+import 'package:inv/database/create_table.dart';
 import 'package:inv/repository/item_repository.dart';
 import 'package:inv/repository/user_repository.dart';
 import 'package:inv/screen/dashboard_screen.dart';
@@ -24,12 +26,12 @@ void main() async {
   final Database database = await openDatabase(
       join(await getDatabasesPath(), 'inv_database.db'),
     onCreate: (db, version) {
-        return db.execute(
-            "CREATE TABLE ITEM_CATEGORY(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, description TEXT, color INTEGER)"
-        );
+        return db.execute(DBCreate.SQL);
     },
     version: 1
   );
+
+  final ItemRepository itemRepository = ItemRepository(database: database);
 
   runApp(MultiBlocProvider(
     providers: [
@@ -51,8 +53,13 @@ void main() async {
       BlocProvider<ItemCategoryBloc>(
         create: (context) {
           return ItemCategoryBloc(
-              itemRepository: ItemRepository(database: database)
+              itemRepository: itemRepository
           )..add(ItemCategoryLoaded());
+        },
+      ),
+      BlocProvider<ItemBloc>(
+        create: (context)  {
+          return ItemBloc(itemRepository: itemRepository);
         },
       )
     ],
