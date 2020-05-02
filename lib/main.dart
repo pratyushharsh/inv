@@ -25,8 +25,10 @@ void main() async {
 
   final Database database = await openDatabase(
       join(await getDatabasesPath(), 'inv_database.db'),
-    onCreate: (db, version) {
-        return db.execute(DBCreate.SQL);
+    onCreate: (db, version) async {
+        await db.execute(DBCreate.ITEM_CATEGORY);
+        await db.execute(DBCreate.ITEM);
+        await db.execute(DBCreate.ITEM_IMAGE);
     },
     version: 1
   );
@@ -59,7 +61,7 @@ void main() async {
       ),
       BlocProvider<ItemBloc>(
         create: (context)  {
-          return ItemBloc(itemRepository: itemRepository);
+          return ItemBloc(itemRepository: itemRepository)..add(ItemLoaded());
         },
       )
     ],

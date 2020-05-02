@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:inv/entity/ItemEntity.dart';
+import 'package:inv/entity/item.dart';
 
 class Item extends Equatable {
   int itemId;

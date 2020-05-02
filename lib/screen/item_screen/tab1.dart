@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inv/bloc/item/bloc.dart';
 import 'package:inv/bloc/item_category/bloc.dart';
+import 'package:inv/model/item.dart';
 import 'package:inv/model/item_category.dart';
 import 'package:inv/repository/item_repository.dart';
 
@@ -52,6 +54,9 @@ class _ItemTabAState extends State<ItemTabA> {
   @override
   void initState() {
     super.initState();
+    _idController = TextEditingController();
+    _nameController = TextEditingController();
+    _descController = TextEditingController();
   }
 
   @override
@@ -96,7 +101,8 @@ class _ItemTabAState extends State<ItemTabA> {
                 child: Column(
                   children: [
                     TextField(
-                      keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
+                      keyboardType: TextInputType.numberWithOptions(
+                          signed: true, decimal: false),
                       controller: _idController,
                       decoration: InputDecoration(labelText: "Item Id"),
                     ),
@@ -122,9 +128,8 @@ class _ItemTabAState extends State<ItemTabA> {
                                   margin: EdgeInsets.all(5.0),
                                   child: Text(itmCat.name),
                                   decoration: BoxDecoration(
-                                    color: Color(itmCat.color).withAlpha(180),
-                                    borderRadius: BorderRadius.circular(5)
-                                  ),
+                                      color: Color(itmCat.color).withAlpha(180),
+                                      borderRadius: BorderRadius.circular(5)),
                                 ),
                               );
                             }).toList(),
@@ -147,6 +152,18 @@ class _ItemTabAState extends State<ItemTabA> {
             controller: _descController,
             decoration: InputDecoration(labelText: "Item Description"),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          RaisedButton(
+            onPressed: () {
+              Item item = new Item(
+                  itemId: int.parse(_idController.text),
+                  name: _nameController.text,
+                  description: _descController.text);
+              BlocProvider.of<ItemBloc>(context).add(ItemAdded(item: item, imageFile: _image));
+            },
+          )
         ],
       ),
     );

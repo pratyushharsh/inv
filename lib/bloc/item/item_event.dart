@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:inv/model/item.dart';
 import 'package:meta/meta.dart';
@@ -14,7 +16,8 @@ class ItemLoaded extends ItemEvent{}
 
 class ItemAdded extends ItemEvent {
   final Item item;
-  ItemAdded({this.item});
+  final File imageFile;
+  ItemAdded({this.item, this.imageFile});
 
   @override
   List<Object> get props => [item];
@@ -49,4 +52,11 @@ class ItemDeleted extends ItemEvent {
   String toString() {
     return 'ItemAdded{item: $item}';
   }
+}
+
+class LoadItemImage extends ItemEvent {
+  final int itemId;
+  LoadItemImage(this.itemId);
+  @override
+  List<Object> get props => [itemId];
 }

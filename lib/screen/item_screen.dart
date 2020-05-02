@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inv/screen/dashboard_screen.dart';
 import 'package:inv/screen/item_screen/tab1.dart';
 
+import 'item_screen/tab2.dart';
+
 class ItemScreen extends StatefulWidget {
   @override
   _ItemScreenState createState() => _ItemScreenState();
@@ -34,9 +36,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 child: TabBarView(
                   children: [
                     ItemTabA(),
-                    Container(
-                      child: Text("Body 2"),
-                    ),
+                    ItemTabB(),
                     Container(
                       child: Text("Body 3"),
                     ),
