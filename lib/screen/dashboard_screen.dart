@@ -5,6 +5,8 @@ import 'package:inv/repository/item_repository.dart';
 import 'package:inv/screen/item_group.dart';
 import 'package:inv/screen/item_screen.dart';
 
+import 'item_display.dart';
+
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,13 @@ class AppDrawer extends StatelessWidget {
             child: Text("Shop Detail and avatar"),
             decoration: BoxDecoration(
                 color: Theme.of(context).accentColor.withAlpha(150)),
+          ),
+          ListTile(
+            title: Text("Item Display"),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ItemDisplayScreen()));
+            },
           ),
           ListTile(
             title: Text("Item"),
